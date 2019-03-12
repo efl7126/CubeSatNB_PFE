@@ -20,11 +20,7 @@
 #ifndef INC_CC1120_CONFIG_H_
 #define INC_CC1120_CONFIG_H_
 
-typedef struct
-{
-  unsigned int addr;
-  unsigned short dat;
-} registerSetting_t;
+
 
 #define VCDAC_START_OFFSET 2
 #define FS_VCO2_INDEX 0

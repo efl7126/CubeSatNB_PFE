@@ -23,6 +23,14 @@
  */
 #include <cc_tx_init.h>
 #include "cc1120_config.h"
+#include "cc_commands.h"
+#include "cc_definitions.h"
+
+typedef struct
+{
+  unsigned int addr;
+  unsigned short dat;
+} registerSetting_t;
 
 static const registerSetting_t TX_preferredSettings[] =
   {
@@ -114,14 +122,15 @@ const registerSetting_t CW_preferredSettings[] =
     { PKT_CFG2, 0x06 },
     { PKT_CFG1, 0x00 },
     { PKT_CFG0, 0x40 },
-    { PA_CFG2, 0x66 },
-    { PA_CFG0, 0x56 },
+    { PA_CFG2, 0x64 },	// Vieille valeur = 64, 66
+	// Pour limiter l'emission, 0x64 (d'apres Smart RF Studio)
+    { PA_CFG0, 0x4C },	// Ancienne valeur 4C, 56
     { IF_MIX_CFG, 0x00 },
     { FREQOFF_CFG, 0x00 },
     { TOC_CFG, 0x0A },
     { CFM_DATA_CFG, 0x01 },
-    { FREQ2, 0x6C },
-    { FREQ1, 0xF1 },
+    { FREQ2, 0x6C }, // Ancien = 6C
+    { FREQ1, 0xF1 }, // Ancien = F1
     { FREQ0, 0x2F },
     { FS_DIG1, 0x00 },
     { FS_DIG0, 0x5F },

@@ -20,11 +20,11 @@
 #ifndef INC_COMMS_MANAGER_H_
 #define INC_COMMS_MANAGER_H_
 
-#include "rx_manager.h"
-#include "tx_manager.h"
-#include "config.h"
+
 
 #define FRAME_OK	1
+
+#include <stddef.h>
 
 /**
  * Struct containing a set of TX jobs that the dispatcher should take care
@@ -48,6 +48,7 @@ send_payload(const uint8_t *in, size_t len, uint8_t is_wod, size_t timeout_ms);
 
 int32_t
 send_payload_cw(const uint8_t *in, size_t len);
+
 
 int32_t
 send_cw_beacon();

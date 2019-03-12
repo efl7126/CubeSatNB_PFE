@@ -69,12 +69,14 @@ cw_encode(cw_pulse_t *out, size_t *out_len, const uint8_t *in, size_t len)
   return CW_OK;
 }
 
+
+
 /**
  * Get the CW character that corresponds to the uptime days
  * @param h a valid pointer to a \p comms_rf_stat_t struct.
  * @return CW character that corresponds to the uptime days. If the pointer
  * is invalid the no data character ('0') will be returned.
- */
+
 char
 cw_get_uptime_hours_char (comms_rf_stat_t *h)
 {
@@ -164,12 +166,12 @@ cw_get_uptime_hours_char (comms_rf_stat_t *h)
   return ret;
 }
 
-/**
+*
  * Get the CW character that corresponds to the uptime days
  * @param h a valid pointer to a \p comms_rf_stat_t struct.
  * @return CW character that corresponds to the uptime days. If the pointer
  * is invalid the no data character ('0') will be returned.
- */
+
 char
 cw_get_uptime_mins_char (comms_rf_stat_t *h)
 {
@@ -619,7 +621,7 @@ cw_get_last_error_char(comms_rf_stat_t *h)
     return '0';
   }
 
-  /* Give a priority at the TX error code. */
+   Give a priority at the TX error code.
   if(h->last_tx_error_code){
     err_code = h->last_tx_error_code;
   }
@@ -682,7 +684,8 @@ cw_get_last_error_char(comms_rf_stat_t *h)
     ret = 'Q';
   }
   return ret;
-}
+}*/
+
 
 /**
  * Initializes the internal structures for CW encoding.
