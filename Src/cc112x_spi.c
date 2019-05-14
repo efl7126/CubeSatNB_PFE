@@ -22,10 +22,10 @@
 #include "cc_commands.h"
 #include "config.h"
 #include "cw.h"
-/*
+
 #include "utils.h"
 #include "log.h"
-*/
+
 #include "status.h"
 /*#include "scrambler.h"*/
 #include "cc_tx_init.h"
@@ -35,6 +35,9 @@
 #include "stm32f4xx_hal_uart.h"
 #include "services.h"
 */
+
+#include "pfe_fonctionsUtilisateur.h"
+
 
 #undef __FILE_ID__
 #define __FILE_ID__ 26
@@ -177,11 +180,11 @@ cc_tx_cmd (uint8_t CMDStrobe)
  * @param len the number of bytes to be sent
  * @return 0 on success of HAL_StatusTypeDef appropriate error code
  */
-/*HAL_StatusTypeDef
+HAL_StatusTypeDef
 cc_tx_spi_write_fifo(const uint8_t *data, uint8_t *spi_rx_data, size_t len)
 {
   HAL_StatusTypeDef ret;
-   Write the Burst flag at the start of the buffer
+  // Write the Burst flag at the start of the buffer
   tx_frag_buf[0] = BURST_TXFIFO;
   memcpy(tx_frag_buf + 1, data, len);
 
@@ -191,7 +194,7 @@ cc_tx_spi_write_fifo(const uint8_t *data, uint8_t *spi_rx_data, size_t len)
 				 COMMS_DEFAULT_TIMEOUT_MS);
   HAL_GPIO_WritePin (GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
   return ret;
-}*/
+}
 
 /**
  * Sets the register configuration for CW transmission
@@ -267,105 +270,182 @@ cc_tx_cw(const cw_pulse_t *in, size_t len)
  * @param timeout_ms timeout in milliseconds
  * @return the number of bytes transmitted or an appropriate error code
  */
-/*int32_t
+int32_t
 cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
 		       size_t timeout_ms)
 {
-  size_t bytes_left = size;
-  size_t gone = 0;
-  size_t in_fifo = 0;
-  size_t issue_len;
-  size_t processed;
+
+  uint8_t myBuf[100] = "Envoi de WOD sur le CC1120 \r\n"; // Utilisé pour la communication USB
+  sendOverUSB(myBuf);
+
+  // volatile ajoute pour debug
+  volatile size_t bytes_left = size;
+  volatile size_t gone = 0;
+  volatile size_t in_fifo = 0;
+  volatile size_t issue_len;
+  volatile size_t processed;
   uint8_t first_burst = 1;
   uint32_t start_tick;
   uint8_t mode;
   uint8_t timeout;
   uint8_t tmp;
 
-   Reset the packet transmitted flag
+  volatile uint8_t bufferByte;
+  uint8_t bufferRegistre[4];
+  uint8_t bufferRegistre1[4];
+  uint8_t bufferRegistre2[4];
+  uint8_t bufferRegistre3[4];
+  uint8_t bufferUnderflow[4];
+
+  // Reset the packet transmitted flag
   tx_fin_flag = 0;
 
-   Set the TX into infinite packet length mode only if the frame is
-   * larger than the maximum CC1120 allowed frame
+  // Set the TX into infinite packet length mode only if the frame is
+  // * larger than the maximum CC1120 allowed frame
 
+  // Size du paquet est 255, donc il faut envoyer le packet en mode infinity
   if(size > CC1120_TX_MAX_FRAME_LEN){
     mode = CC1120_INFINITE_PKT_LEN;
   }
   else{
     mode = CC1120_FIXED_PKT_LEN;
   }
+
   cc_tx_wr_reg(PKT_CFG0, mode);
-   Pre-program the packet length register
+  // Pre-program the packet length register
+
   cc_tx_wr_reg(PKT_LEN, size % (CC1120_TX_MAX_FRAME_LEN + 1));
 
-   The clock is ticking...
+
+  // The clock is ticking...
   start_tick = HAL_GetTick ();
+
+
   while( gone + in_fifo < size) {
-     Reset the FIFO interrupt flag
+
+
+	  cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+	  cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+	  cc_tx_rd_reg(TXLAST, bufferRegistre2);
+	  cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+
+  //   Reset the FIFO interrupt flag
     tx_thr_flag = 0;
+
+    // Debug
+    // cc_tx_rd_reg(MARCSTATE, bufferRegistre);
 
     if(first_burst){
       first_burst = 0;
       issue_len = min(CC1120_TX_FIFO_SIZE, size);
+
+      // Debug
+      cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+      cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+      cc_tx_rd_reg(TXLAST, bufferRegistre2);
+
       cc_tx_spi_write_fifo (data, rec_data, issue_len);
 
-       Start the TX procedure
-      cc_tx_cmd (STX);
-      SYSVIEW_PRINT("CC TX: Issue: %u", issue_len);
+      // Debug
+      cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+      cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+      cc_tx_rd_reg(TXLAST, bufferRegistre2);
+      cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+      // Pour debug, lit le nombre de bytes qu'il y a dans la FIFO
+      //cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre);
+      //cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+      //cc_tx_rd_reg(TXLAST, bufferRegistre2);
+
+    //   Start the TX procedure
+      bufferByte = cc_tx_cmd (STX);
+
+      // Debug
+            cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+            cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+            cc_tx_rd_reg(TXLAST, bufferRegistre2);
+            cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+      //SYSVIEW_PRINT("CC TX: Issue: %u", issue_len);
     }
     else{
+
       issue_len = min(CC1120_TXFIFO_AVAILABLE_BYTES, size - gone - in_fifo);
       cc_tx_spi_write_fifo (data + gone + in_fifo, rec_data, issue_len);
-      SYSVIEW_PRINT("CC TX: Issue: %u GN: %u INFIFO: %u", issue_len,
-		    gone, in_fifo);
+
+      // Debug
+              cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+              cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+              cc_tx_rd_reg(TXLAST, bufferRegistre2);
+              cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+      //SYSVIEW_PRINT("CC TX: Issue: %u GN: %u INFIFO: %u", issue_len,
+	  //	    gone, in_fifo);
+      // DEBUG
+      //bufferByte = cc_tx_cmd (STX);
+      //bufferByte = cc_tx_cmd (SIDLE);
     }
     bytes_left -= issue_len;
 
-     Track the number of bytes in the TX FIFO
+   //  Track the number of bytes in the TX FIFO
     in_fifo += issue_len;
 
 
-     * If the remaining bytes are less than the maximum frame size switch to
-     * fixed packet length mode
+   //  * If the remaining bytes are less than the maximum frame size switch to
+   //  * fixed packet length mode
 
     if (bytes_left < ((CC1120_TX_MAX_FRAME_LEN + 1) - in_fifo)
 	&& (mode == CC1120_INFINITE_PKT_LEN) ) {
-      cc_tx_wr_reg(PKT_CFG0, CC1120_FIXED_PKT_LEN);
-      mode = CC1120_FIXED_PKT_LEN;
+		  cc_tx_wr_reg(PKT_CFG0, CC1120_FIXED_PKT_LEN);
+		  mode = CC1120_FIXED_PKT_LEN;
     }
 
-     If the data in the FIFO is above the IRQ limit wait for that IRQ
+    // If the data in the FIFO is above the IRQ limit wait for that IRQ
     if (in_fifo >= CC1120_TXFIFO_IRQ_THR && size != issue_len && bytes_left) {
       timeout = 1;
-      while (HAL_GetTick () - start_tick < timeout_ms) {
-         Remove this and the satellite will EXPLODE!
-	delay_us(800);
-        if (tx_thr_flag) {
-          timeout = 0;
-          break;
-        }
-      }
+		  while (HAL_GetTick () - start_tick < timeout_ms) {
+			 //    Remove this and the satellite will EXPLODE!
+			 delay_us(800);
+			 if (tx_thr_flag) {
+				 timeout = 0;
+				 break;
+			 }
+		  }
 
-       Timeout occurred. Abort
-      if (timeout) {
-	SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
-	delay_us(1000);
-	cc_tx_cmd (SIDLE);
-	cc_tx_cmd (SFTX);
-	return COMMS_STATUS_TIMEOUT;
-      }
+		  //   Timeout occurred. Abort
+		  if (timeout) {
+			// SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
+			delay_us(1000);
 
-      processed = in_fifo - issue_len ;
-      gone += processed;
-      in_fifo -= processed;
+			// Pour debug, lit le nombre de bytes qu'il y a dans la FIFO
+			cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre);
+
+			bufferByte = cc_tx_cmd (SIDLE);
+			bufferByte = cc_tx_cmd (SFTX);
+			return COMMS_STATUS_TIMEOUT;
+		  }
+
+		  // Apres avoir donne au chip le temps de processer les bits de la FIFO
+		  processed = in_fifo - issue_len ;
+		  gone += processed;
+		  in_fifo -= processed;
     }
     else {
       gone += issue_len;
       in_fifo -= issue_len;
     }
-  }
+  } // Fin while
 
-   Wait the FIFO to empty
+
+  // Debug
+  cc_tx_rd_reg(MODEM_STATUS0, bufferUnderflow);
+  cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+
+  cc_tx_rd_reg(TXLAST, bufferRegistre2);
+  cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+  // Wait the FIFO to empty
   timeout = 1;
   while (HAL_GetTick () - start_tick < timeout_ms) {
     delay_us(800);
@@ -376,21 +456,29 @@ cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
     }
   }
 
-   Timeout occurred. Abort
+  // Timeout occurred. Abort
   if (timeout) {
-    SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
+    // SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
     delay_us(1000);
     cc_tx_cmd (SIDLE);
     cc_tx_cmd (SFTX);
     return COMMS_STATUS_TIMEOUT;
   }
 
-   If you change this, you deserve to die trying to debug...
+
+  // Debug
+    cc_tx_rd_reg(MARCSTATE, bufferRegistre);
+    cc_tx_rd_reg(TXFIRST, bufferRegistre1);
+    cc_tx_rd_reg(TXLAST, bufferRegistre2);
+    cc_tx_rd_reg(NUM_TXBYTES, bufferRegistre3);
+
+
+  // If you change this, you deserve to die trying to debug...
   delay_us(1000);
   cc_tx_cmd (SIDLE);
   cc_tx_cmd (SFTX);
   return gone + in_fifo;
-}*/
+}
 
 /**
  * Reads a register from the RX CC1120 chip

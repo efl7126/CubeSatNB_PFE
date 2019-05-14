@@ -25,6 +25,7 @@
 #define FRAME_OK	1
 
 #include <stddef.h>
+#include <stdint.h>
 
 /**
  * Struct containing a set of TX jobs that the dispatcher should take care
