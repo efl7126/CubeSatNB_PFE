@@ -57,7 +57,15 @@ tx_data(const uint8_t *in, size_t len, uint8_t *dev_rx_buffer, uint8_t is_wod,
   }
 
   /* Issue the frame at the CC1120 */
-  ret = cc_tx_data_continuous(tmp_buf, ret, dev_rx_buffer, timeout_ms);
+  // ret = cc_tx_data_continuous(tmp_buf, ret, dev_rx_buffer, timeout_ms);
+
+  // cc_tx_data_continuous a été testé plusieurs fois, mais il y a toujours eu
+  // des problèmes de timeout qui nont jamais pu etre resolus
+  // runTX a ete ecrit au lieu et est inspire par un exemple de code fourni par
+  // Texas Instrument
+
+  ret = runTX (tmp_buf, ret, dev_rx_buffer, timeout_ms);
+
   if(ret < 1){
     return ret;
   }
@@ -90,6 +98,8 @@ tx_data_cw (const uint8_t *in, size_t len)
   }
 
   ret = cc_tx_cw(cw_buf, symbols_num);
+
+
   if(ret != CW_OK) {
     return COMMS_STATUS_INVALID_FRAME;
   }
