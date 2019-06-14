@@ -10,7 +10,14 @@ RM := rm -rf
 -include sources.mk
 -include startup/subdir.mk
 -include Src/subdir.mk
+<<<<<<< HEAD
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+=======
+-include Middlewares/ST/STM32_USB_Device_Library/Core/Src/subdir.mk
+-include Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/subdir.mk
+-include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+-include Drivers/STM32F4xx_HAL_Driver/subdir.mk
+>>>>>>> CommunicationAX25
 -include subdir.mk
 -include objects.mk
 
@@ -28,6 +35,7 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
+<<<<<<< HEAD
 all: InstructablePF0.elf
 
 # Tool invocations
@@ -35,6 +43,15 @@ InstructablePF0.elf: $(OBJS) $(USER_OBJS) ../STM32F407ZETx_FLASH.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
 	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F407ZETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "InstructablePF0.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+=======
+all: TestUART.elf
+
+# Tool invocations
+TestUART.elf: $(OBJS) $(USER_OBJS) ../STM32F407ZETx_FLASH.ld
+	@echo 'Building target: $@'
+	@echo 'Invoking: MCU GCC Linker'
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F407ZETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "TestUART.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+>>>>>>> CommunicationAX25
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
@@ -46,8 +63,13 @@ clean:
 
 post-build:
 	-@echo 'Generating hex and Printing size information:'
+<<<<<<< HEAD
 	arm-none-eabi-objcopy -O ihex "InstructablePF0.elf" "InstructablePF0.hex"
 	arm-none-eabi-size "InstructablePF0.elf"
+=======
+	arm-none-eabi-objcopy -O ihex "TestUART.elf" "TestUART.hex"
+	arm-none-eabi-size "TestUART.elf"
+>>>>>>> CommunicationAX25
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -21,11 +21,17 @@
 #define __AX25_H
 
 #include <stdint.h>
+<<<<<<< HEAD
 /*
 #include "utils.h"
 #include "config.h"
 #include "scrambler.h"
 */
+=======
+#include "utils.h"
+#include "config.h"
+#include "scrambler.h"
+>>>>>>> CommunicationAX25
 #include <limits.h>
 #include <stddef.h>
 #include <string.h>
@@ -90,7 +96,10 @@ typedef struct
   ax25_frame_type_t type;
 } ax25_frame_t;
 
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> CommunicationAX25
 typedef struct
 {
   ax25_decoding_state_t state;
@@ -100,10 +109,16 @@ typedef struct
   uint8_t bit_cnt;
   scrambler_handle_t descrambler;
 } ax25_handle_t;
+<<<<<<< HEAD
 */
 
 
 /*uint16_t
+=======
+
+
+uint16_t
+>>>>>>> CommunicationAX25
 ax25_fcs (uint8_t *buffer, size_t len);
 
 size_t
@@ -150,6 +165,10 @@ int32_t
 ax25_rx_init(ax25_handle_t *h);
 
 int32_t
+<<<<<<< HEAD
 ax25_rx_reset(ax25_handle_t *h);*/
+=======
+ax25_rx_reset(ax25_handle_t *h);
+>>>>>>> CommunicationAX25
 
 #endif
