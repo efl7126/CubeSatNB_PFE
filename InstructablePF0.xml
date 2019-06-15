@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<targetDefinitions xmlns="http://openstm32.org/stm32TargetDefinitions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openstm32.org/stm32TargetDefinitions stm32TargetDefinitions.xsd">
-  <board id="InstructablePF0">
-    <name>InstructablePF0</name>
-    <mcuId>STM32F407ZETx</mcuId>  <!-- mcu-->
-    <dbgIF>SWD</dbgIF>
-    <dbgDEV>ST-LinkV2-1</dbgDEV>
-=======
 <!DOCTYPE targetDefinitions [ 
 	<!ELEMENT targetDefinitions (board)>
 	<!ELEMENT board (name, dbgIF+, dbgDEV, mcuId)>
@@ -23,6 +15,5 @@
     <dbgIF>SWD</dbgIF>
     <dbgDEV>ST-Link</dbgDEV>
     <mcuId>stm32f407zetx</mcuId>
->>>>>>> CommunicationAX25
   </board>
 </targetDefinitions>

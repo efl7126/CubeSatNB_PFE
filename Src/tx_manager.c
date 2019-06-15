@@ -57,9 +57,6 @@ tx_data(const uint8_t *in, size_t len, uint8_t *dev_rx_buffer, uint8_t is_wod,
   }
 
   /* Issue the frame at the CC1120 */
-<<<<<<< HEAD
-  ret = cc_tx_data_continuous(tmp_buf, ret, dev_rx_buffer, timeout_ms);
-=======
   // ret = cc_tx_data_continuous(tmp_buf, ret, dev_rx_buffer, timeout_ms);
 
   // cc_tx_data_continuous a été testé plusieurs fois, mais il y a toujours eu
@@ -69,7 +66,6 @@ tx_data(const uint8_t *in, size_t len, uint8_t *dev_rx_buffer, uint8_t is_wod,
 
   ret = runTX (tmp_buf, ret, dev_rx_buffer, timeout_ms);
 
->>>>>>> CommunicationAX25
   if(ret < 1){
     return ret;
   }
@@ -102,11 +98,8 @@ tx_data_cw (const uint8_t *in, size_t len)
   }
 
   ret = cc_tx_cw(cw_buf, symbols_num);
-<<<<<<< HEAD
-=======
 
 
->>>>>>> CommunicationAX25
   if(ret != CW_OK) {
     return COMMS_STATUS_INVALID_FRAME;
   }

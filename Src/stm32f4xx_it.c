@@ -31,30 +31,21 @@
   ******************************************************************************
   */
 /* Includes ------------------------------------------------------------------*/
-<<<<<<< HEAD
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx.h"
-#include "stm32f4xx_it.h"
-=======
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx.h"
 #include "stm32f4xx_it.h"
 #include "stm32f4xx_hal_uart.h"
->>>>>>> CommunicationAX25
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-<<<<<<< HEAD
-=======
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern DMA_HandleTypeDef hdma_uart5_tx;
 extern UART_HandleTypeDef huart5;
->>>>>>> CommunicationAX25
 
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
@@ -206,8 +197,6 @@ void SysTick_Handler(void)
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
 
-<<<<<<< HEAD
-=======
 /**
 * @brief This function handles EXTI line2 interrupt.
 */
@@ -309,7 +298,6 @@ void UART5_IRQHandler(void)
 
 
 
->>>>>>> CommunicationAX25
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

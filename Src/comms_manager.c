@@ -17,20 +17,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-<<<<<<< HEAD
-
-
-#undef __FILE_ID__
-#define __FILE_ID__ 25
-
-#include <stdint.h>
-#include "comms_manager.h"
-#include "stm32f4xx_hal.h"
-#include "ax25.h"
-#include "cw.h"
-#include "status.h"
-#include "tx_manager.h"
-=======
 #include "comms_manager.h"
 #include "ax25.h"
 #include "status.h"
@@ -68,7 +54,6 @@
 
 #undef __FILE_ID__
 #define __FILE_ID__ 25
->>>>>>> CommunicationAX25
 
 static uint8_t interm_buf[AX25_PREAMBLE_LEN + AX25_POSTAMBLE_LEN + AX25_MAX_FRAME_LEN + 2];
 static uint8_t spi_buf[AX25_PREAMBLE_LEN
@@ -77,15 +62,12 @@ static uint8_t spi_buf[AX25_PREAMBLE_LEN
 static uint8_t recv_buffer[AX25_MAX_FRAME_LEN];
 static uint8_t send_buffer[AX25_MAX_FRAME_LEN];
 
-<<<<<<< HEAD
-=======
 volatile extern uint8_t rx_sync_flag;
 
 extern UART_HandleTypeDef huart5;
 extern IWDG_HandleTypeDef hiwdg;
 extern struct _comms_data comms_data;
 comms_rf_stat_t comms_stats;
->>>>>>> CommunicationAX25
 
 // Notifies the communication mode over USB
 uint8_t charArray_text[30] = "test \r\n";
@@ -93,10 +75,7 @@ uint8_t charArray_text[30] = "test \r\n";
 /**
  * Timer that keeps track of the Command and Control phase
  */
-<<<<<<< HEAD
-=======
 comms_cmd_ctrl_t cmd_and_ctrl;
->>>>>>> CommunicationAX25
 
 /**
  * Used to delay the update of the internal statistics and save some cycles
@@ -104,72 +83,6 @@ comms_cmd_ctrl_t cmd_and_ctrl;
 static uint32_t stats_tick;
 static uint32_t rx_fifo_tick;
 
-<<<<<<< HEAD
-/**
- * Disables the TX RF
- */
-
-/**
- * Make all the necessary initializations for the COMMS subsystem
- */
-void
-comms_init ()
-{
-  uint8_t cc_id_tx;
-  uint8_t cc_id_rx;
-  volatile uint8_t codeRetour = 10;
-//
-  /* fetch TX ID */
-  codeRetour = cc_tx_rd_reg (0x2F8F, &cc_id_tx);
-
-  /* fetch RX ID */
-//  cc_rx_rd_reg (0x2F8F, &cc_id_rx);
-//
-  /* Configure TX CC1120 */
-  tx_registerConfig ();
-
-  HAL_Delay (10);
-  codeRetour = cc_tx_rd_reg (0x2f8F, &cc_id_tx);
-//
-//  /* Configure RX CC1120 */
-//	rx_register_config (); // Comment out for now
-//	HAL_Delay (10);
-//	cc_rx_rd_reg (0x2f8F, &cc_id_rx);
-//
-//  /* Calibrate TX */
-  	// tx_manualCalibration ();
-cc_tx_rd_reg (0x2f8F, &cc_id_tx);
-//
-//  /* Calibrate RX */
-// rx_manual_calibration ();
-// cc_rx_rd_reg (0x2f8F, &cc_id_tx);
-//
-  /* Initialize the TX and RX routines */
-//  rx_init();
-  cw_init();
-//
-//  // Comment Add to remove error
-//  // large_data_init();
-//
-//  /*Initialize the COMMS statistics mechanism */
-//  comms_rf_stats_init(&comms_stats);
-//
-//  /* Initialize the CC1120 in RX mode */
-// cc_rx_cmd(SRX);
-//
-//  // Comment Add to remove error
-//  //pkt_pool_INIT ();
-//
-// comms_wod_init();
-// comms_ex_wod_init();
-//
-//  /* Initialize all the time counters */
-stats_tick = HAL_GetTick();
-rx_fifo_tick = stats_tick;
-// set_cmd_and_ctrl_period(0);
-}
-
-=======
 // static SHA256_CTX sha_ctx;
 /**
  * Disables the TX RF
@@ -405,7 +318,6 @@ send_payload(const uint8_t *in, size_t len, uint8_t is_wod, size_t timeout_ms)
   comms_rf_stats_frame_transmitted(&comms_stats, ret > 1, ret);
   return ret;
 }
->>>>>>> CommunicationAX25
 
 /**
  * Sends a payload using CW Morse code
@@ -417,11 +329,7 @@ int32_t
 send_payload_cw(const uint8_t *in, size_t len)
 {
 
-<<<<<<< HEAD
-  //sendOverUSB("Fonction send_payload_cw \r\n");
-=======
   // sendOverUSB("Fonction send_payload_cw \r\n");
->>>>>>> CommunicationAX25
 
   int32_t ret;
 
@@ -430,15 +338,9 @@ send_payload_cw(const uint8_t *in, size_t len)
   }
 
   /* Check if the TX is enabled */
-<<<<<<< HEAD
-/*  if(!is_tx_enabled()){
-    return COMMS_STATUS_RF_OFF;
-  }*/
-=======
   if(!is_tx_enabled()){
     return COMMS_STATUS_RF_OFF;
   }
->>>>>>> CommunicationAX25
 
   ret = tx_data_cw(in, len);
   return ret;
@@ -454,26 +356,6 @@ send_cw_beacon()
   size_t i = 0;
 
   /* Check if the satellite is during command and control phase */
-<<<<<<< HEAD
-  /*if(is_cmd_ctrl_enabled()) {
-    return 0;
-  }*/
-
-  memset(send_buffer, 0, AX25_MAX_FRAME_LEN);
-  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
-//  send_buffer[i++] = 'Y';
- /* send_buffer[i++] = cw_get_bat_voltage_char(&comms_stats);
-=======
   if(is_cmd_ctrl_enabled()) {
     return 0;
   }
@@ -485,7 +367,6 @@ send_cw_beacon()
   send_buffer[i++] = 'A';
   send_buffer[i++] = 'T';
 /*  send_buffer[i++] = cw_get_bat_voltage_char(&comms_stats);
->>>>>>> CommunicationAX25
   send_buffer[i++] = cw_get_bat_current_char(&comms_stats);
   send_buffer[i++] = cw_get_temp_char(&comms_stats);
   send_buffer[i++] = cw_get_uptime_hours_char(&comms_stats);
@@ -495,11 +376,6 @@ send_cw_beacon()
   return send_payload_cw(send_buffer, i);
 }
 
-<<<<<<< HEAD
-
-
-
-=======
 /**
  * This dispatcher checks which communication related task should execute.
  * The task may be:
@@ -697,4 +573,3 @@ stats_tick = HAL_GetTick();
 rx_fifo_tick = stats_tick;
 set_cmd_and_ctrl_period(0);
 }
->>>>>>> CommunicationAX25

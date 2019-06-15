@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-<<<<<<< HEAD
-	<name>InstructablePF0</name>
-	<comment />
-=======
 	<name>TestUART</name>
 	<comment></comment>
->>>>>>> CommunicationAX25
 	<projects>
 	</projects>
 	<buildSpec>
@@ -29,10 +24,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>fr.ac6.mcu.ide.core.MCUProjectNature</nature>
 	</natures>
-<<<<<<< HEAD
-	<linkedResources>
-		
-	</linkedResources>
-=======
->>>>>>> CommunicationAX25
 </projectDescription>

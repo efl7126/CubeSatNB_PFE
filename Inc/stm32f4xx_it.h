@@ -56,8 +56,6 @@ void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
-<<<<<<< HEAD
-=======
 void EXTI2_IRQHandler(void);
 void EXTI3_IRQHandler(void);
 void EXTI9_5_IRQHandler(void);
@@ -65,7 +63,6 @@ void DMA2_Stream3_IRQHandler(void);
 void OTG_FS_IRQHandler(void);
 void DMA1_Stream7_IRQHandler(void);
 void UART5_IRQHandler(void);
->>>>>>> CommunicationAX25
 
 #ifdef __cplusplus
 }

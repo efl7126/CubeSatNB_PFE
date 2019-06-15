@@ -6,12 +6,9 @@
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o"
-<<<<<<< HEAD
-=======
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.o"
->>>>>>> CommunicationAX25
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o"
@@ -19,8 +16,6 @@
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
-<<<<<<< HEAD
-=======
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
 "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.o"
 "Drivers/STM32F4xx_HAL_Driver/stm32f4xx_hal_uart.o"
@@ -29,18 +24,10 @@
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o"
 "Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o"
 "Src/ax25.o"
->>>>>>> CommunicationAX25
 "Src/cc112x_spi.o"
 "Src/cc_tx_init.o"
 "Src/comms_manager.o"
 "Src/cw.o"
-<<<<<<< HEAD
-"Src/main.o"
-"Src/stm32f4xx_hal_msp.o"
-"Src/stm32f4xx_it.o"
-"Src/system_stm32f4xx.o"
-"Src/tx_manager.o"
-=======
 "Src/lfsr.o"
 "Src/main.o"
 "Src/pfe_fonctionsUtilisateur.o"
@@ -56,5 +43,4 @@
 "Src/usbd_conf.o"
 "Src/usbd_desc.o"
 "Src/wod_handling.o"
->>>>>>> CommunicationAX25
 "startup/startup_stm32f407xx.o"

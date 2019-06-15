@@ -25,10 +25,7 @@
 #define FRAME_OK	1
 
 #include <stddef.h>
-<<<<<<< HEAD
-=======
 #include <stdint.h>
->>>>>>> CommunicationAX25
 
 /**
  * Struct containing a set of TX jobs that the dispatcher should take care

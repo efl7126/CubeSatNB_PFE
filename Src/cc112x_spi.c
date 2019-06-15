@@ -22,17 +22,10 @@
 #include "cc_commands.h"
 #include "config.h"
 #include "cw.h"
-<<<<<<< HEAD
-/*
-#include "utils.h"
-#include "log.h"
-*/
-=======
 
 #include "utils.h"
 #include "log.h"
 
->>>>>>> CommunicationAX25
 #include "status.h"
 /*#include "scrambler.h"*/
 #include "cc_tx_init.h"
@@ -43,11 +36,6 @@
 #include "services.h"
 */
 
-<<<<<<< HEAD
-#undef __FILE_ID__
-#define __FILE_ID__ 26
-
-=======
 #include "pfe_fonctionsUtilisateur.h"
 
 
@@ -57,7 +45,6 @@
 extern uint8_t activerCW;
 
 
->>>>>>> CommunicationAX25
 extern SPI_HandleTypeDef hspi1;
 /*extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart5;*/
@@ -196,19 +183,11 @@ cc_tx_cmd (uint8_t CMDStrobe)
  * @param len the number of bytes to be sent
  * @return 0 on success of HAL_StatusTypeDef appropriate error code
  */
-<<<<<<< HEAD
-/*HAL_StatusTypeDef
-cc_tx_spi_write_fifo(const uint8_t *data, uint8_t *spi_rx_data, size_t len)
-{
-  HAL_StatusTypeDef ret;
-   Write the Burst flag at the start of the buffer
-=======
 HAL_StatusTypeDef
 cc_tx_spi_write_fifo(const uint8_t *data, uint8_t *spi_rx_data, size_t len)
 {
   HAL_StatusTypeDef ret;
   // Write the Burst flag at the start of the buffer
->>>>>>> CommunicationAX25
   tx_frag_buf[0] = BURST_TXFIFO;
   memcpy(tx_frag_buf + 1, data, len);
 
@@ -218,11 +197,7 @@ cc_tx_spi_write_fifo(const uint8_t *data, uint8_t *spi_rx_data, size_t len)
 				 COMMS_DEFAULT_TIMEOUT_MS);
   HAL_GPIO_WritePin (GPIOA, GPIO_PIN_15, GPIO_PIN_SET);
   return ret;
-<<<<<<< HEAD
-}*/
-=======
 }
->>>>>>> CommunicationAX25
 
 /**
  * Sets the register configuration for CW transmission
@@ -265,21 +240,6 @@ cc_tx_cw(const cw_pulse_t *in, size_t len)
   /*At least one byte should be written at the FIFO */
   //cc_tx_spi_write_fifo (t, t2, 4);
 
-<<<<<<< HEAD
-  /*
-   * Switch on and off the carrier for the proper amount of time
-   */
-  for(i = 0; i < len; i++) {
-    if(in[i].cw_on){
-      cc_tx_cmd (STX);
-      HAL_Delay(in[i].duration_ms);
-      cc_tx_cmd (SIDLE);
-    }
-    else{
-      HAL_Delay(in[i].duration_ms);
-    }
-  }
-=======
 
 
   // Switch on and off the carrier for the proper amount of time
@@ -298,17 +258,12 @@ cc_tx_cw(const cw_pulse_t *in, size_t len)
 	  }
   }
 
->>>>>>> CommunicationAX25
   cc_tx_cmd (SIDLE);
   HAL_Delay(10);
 
   /* Restore the FSK configuration */
   cc_tx_cmd (SRES);
-<<<<<<< HEAD
-  // set_tx_fsk_regs();
-=======
   set_tx_fsk_regs();
->>>>>>> CommunicationAX25
   cc_tx_cmd (SIDLE);
   cc_tx_cmd (SFTX);
   return CW_OK;
@@ -323,17 +278,6 @@ cc_tx_cw(const cw_pulse_t *in, size_t len)
  * @param timeout_ms timeout in milliseconds
  * @return the number of bytes transmitted or an appropriate error code
  */
-<<<<<<< HEAD
-/*int32_t
-cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
-		       size_t timeout_ms)
-{
-  size_t bytes_left = size;
-  size_t gone = 0;
-  size_t in_fifo = 0;
-  size_t issue_len;
-  size_t processed;
-=======
 int32_t
 cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
 		       size_t timeout_ms)
@@ -348,21 +292,12 @@ cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
   volatile size_t in_fifo = 0;
   volatile size_t issue_len;
   volatile size_t processed;
->>>>>>> CommunicationAX25
   uint8_t first_burst = 1;
   uint32_t start_tick;
   uint8_t mode;
   uint8_t timeout;
   uint8_t tmp;
 
-<<<<<<< HEAD
-   Reset the packet transmitted flag
-  tx_fin_flag = 0;
-
-   Set the TX into infinite packet length mode only if the frame is
-   * larger than the maximum CC1120 allowed frame
-
-=======
   volatile uint8_t bufferByte;
   uint8_t bufferRegistre[4];
   uint8_t bufferRegistre1[4];
@@ -377,79 +312,12 @@ cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
   // * larger than the maximum CC1120 allowed frame
 
   // Size du paquet est 255, donc il faut envoyer le packet en mode infinity
->>>>>>> CommunicationAX25
   if(size > CC1120_TX_MAX_FRAME_LEN){
     mode = CC1120_INFINITE_PKT_LEN;
   }
   else{
     mode = CC1120_FIXED_PKT_LEN;
   }
-<<<<<<< HEAD
-  cc_tx_wr_reg(PKT_CFG0, mode);
-   Pre-program the packet length register
-  cc_tx_wr_reg(PKT_LEN, size % (CC1120_TX_MAX_FRAME_LEN + 1));
-
-   The clock is ticking...
-  start_tick = HAL_GetTick ();
-  while( gone + in_fifo < size) {
-     Reset the FIFO interrupt flag
-    tx_thr_flag = 0;
-
-    if(first_burst){
-      first_burst = 0;
-      issue_len = min(CC1120_TX_FIFO_SIZE, size);
-      cc_tx_spi_write_fifo (data, rec_data, issue_len);
-
-       Start the TX procedure
-      cc_tx_cmd (STX);
-      SYSVIEW_PRINT("CC TX: Issue: %u", issue_len);
-    }
-    else{
-      issue_len = min(CC1120_TXFIFO_AVAILABLE_BYTES, size - gone - in_fifo);
-      cc_tx_spi_write_fifo (data + gone + in_fifo, rec_data, issue_len);
-      SYSVIEW_PRINT("CC TX: Issue: %u GN: %u INFIFO: %u", issue_len,
-		    gone, in_fifo);
-    }
-    bytes_left -= issue_len;
-
-     Track the number of bytes in the TX FIFO
-    in_fifo += issue_len;
-
-
-     * If the remaining bytes are less than the maximum frame size switch to
-     * fixed packet length mode
-
-    if (bytes_left < ((CC1120_TX_MAX_FRAME_LEN + 1) - in_fifo)
-	&& (mode == CC1120_INFINITE_PKT_LEN) ) {
-      cc_tx_wr_reg(PKT_CFG0, CC1120_FIXED_PKT_LEN);
-      mode = CC1120_FIXED_PKT_LEN;
-    }
-
-     If the data in the FIFO is above the IRQ limit wait for that IRQ
-    if (in_fifo >= CC1120_TXFIFO_IRQ_THR && size != issue_len && bytes_left) {
-      timeout = 1;
-      while (HAL_GetTick () - start_tick < timeout_ms) {
-         Remove this and the satellite will EXPLODE!
-	delay_us(800);
-        if (tx_thr_flag) {
-          timeout = 0;
-          break;
-        }
-      }
-
-       Timeout occurred. Abort
-      if (timeout) {
-	SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
-	delay_us(1000);
-	cc_tx_cmd (SIDLE);
-	cc_tx_cmd (SFTX);
-	return COMMS_STATUS_TIMEOUT;
-      }
-
-      processed = in_fifo - issue_len ;
-      gone += processed;
-      in_fifo -= processed;
-=======
 
   cc_tx_wr_reg(PKT_CFG0, mode);
   // Pre-program the packet length register
@@ -574,21 +442,11 @@ cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
 		  processed = in_fifo - issue_len ;
 		  gone += processed;
 		  in_fifo -= processed;
->>>>>>> CommunicationAX25
     }
     else {
       gone += issue_len;
       in_fifo -= issue_len;
     }
-<<<<<<< HEAD
-  }
-
-   Wait the FIFO to empty
-  timeout = 1;
-  while (HAL_GetTick () - start_tick < timeout_ms) {
-    delay_us(800);
-    cc_tx_rd_reg(NUM_TXBYTES, &tmp);
-=======
   } // Fin while
 
 
@@ -606,36 +464,21 @@ cc_tx_data_continuous (const uint8_t *data, size_t size, uint8_t *rec_data,
     delay_us(100);	//800 avant
     cc_tx_rd_reg(NUM_TXBYTES, &tmp);
     uint8_t test = 0;
->>>>>>> CommunicationAX25
     if (tmp == 0) {
       timeout = 0;
       break;
     }
   }
 
-<<<<<<< HEAD
-   Timeout occurred. Abort
-  if (timeout) {
-    SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
-=======
   // Timeout occurred. Abort
   if (timeout) {
     // SYSVIEW_PRINT("CC TX: Timeout %u", __LINE__);
->>>>>>> CommunicationAX25
     delay_us(1000);
     cc_tx_cmd (SIDLE);
     cc_tx_cmd (SFTX);
     return COMMS_STATUS_TIMEOUT;
   }
 
-<<<<<<< HEAD
-   If you change this, you deserve to die trying to debug...
-  delay_us(1000);
-  cc_tx_cmd (SIDLE);
-  cc_tx_cmd (SFTX);
-  return gone + in_fifo;
-}*/
-=======
 
   // Debug
     cc_tx_rd_reg(MARCSTATE, bufferRegistre);
@@ -740,7 +583,6 @@ runTX (const uint8_t *data, size_t size, uint8_t *rec_data,
     return -4;
 }
 
->>>>>>> CommunicationAX25
 
 /**
  * Reads a register from the RX CC1120 chip

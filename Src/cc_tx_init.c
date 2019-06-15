@@ -50,15 +50,10 @@ static const registerSetting_t TX_preferredSettings[] =
     { IQIC, 0xC6 },
     { CHAN_BW, 0x08 },
     { MDMCFG0, 0x05 },
-<<<<<<< HEAD
-    { SYMBOL_RATE2, 0x73 },
-    { AGC_REF, 0x20 },
-=======
     { SYMBOL_RATE2, 0x43 },	// Ancienne valeur est 0x73 pour 9600 bps. SYMBOL_RATE1 et SYMBOL_RATE2 ne sont pas spécifiés.
 	{ SYMBOL_RATE1, 0xA9 }, // bps = 1200
 	{ SYMBOL_RATE0, 0x2A }, // bps = 1200
 	{ AGC_REF, 0x20 },
->>>>>>> CommunicationAX25
     { AGC_CS_THR, 0x19 },
     { AGC_CFG1, 0xA9 },
     { FIFO_CFG, CC1120_TXFIFO_THR },
@@ -71,15 +66,9 @@ static const registerSetting_t TX_preferredSettings[] =
 	{ PKT_LEN, 0xFF },
 	{ IF_MIX_CFG, 0x00 },
 	{ FREQOFF_CFG, 0x22 },
-<<<<<<< HEAD
-	{ FREQ2, 0x6C },
-	{ FREQ1, 0xF1 },
-	{ FREQ0, 0x2F },
-=======
 	{ FREQ2, 0x6C },	// 0x6C = 435.8 MHz
 	{ FREQ1, 0xF1 },    // 0xF1
 	{ FREQ0, 0x2F },	// 0x2F
->>>>>>> CommunicationAX25
 	{ FS_DIG1, 0x00 },
 	{ FS_DIG0, 0x5F },
 	{ FS_CAL1, 0x40 },
@@ -107,9 +96,6 @@ static const registerSetting_t TX_preferredSettings[] =
 	{ IQIE_Q0, 0x2F },
 	{ AGC_GAIN1, 0x13 },
 	{ SERIAL_STATUS, 0x10 },
-<<<<<<< HEAD
-	{ MODCFG_DEV_E, 0x0B } };
-=======
 	{ MODCFG_DEV_E, 0x06 }, // 0x03 pour 5 kHz
 							// Nouvelle valeur 0x05
 							// =FSK, Ancienne valeur etait 0x0B (pour 2-GFSK)
@@ -119,7 +105,6 @@ static const registerSetting_t TX_preferredSettings[] =
 
   };
 
->>>>>>> CommunicationAX25
 
 const registerSetting_t CW_preferredSettings[] =
   {
@@ -128,11 +113,7 @@ const registerSetting_t CW_preferredSettings[] =
     { IOCFG1, 0xB0 },
     { IOCFG0, 0x09 },
     { SYNC_CFG1, 0x0B },
-<<<<<<< HEAD
-    { DEVIATION_M, 0x26 },
-=======
     { DEVIATION_M, 0x26 },	// Donne 4,48 MHz de deviation
->>>>>>> CommunicationAX25
     { MODCFG_DEV_E, 0x05 },
     { DCFILT_CFG, 0x13 },
     { PREAMBLE_CFG1, 0x00 },
@@ -148,32 +129,19 @@ const registerSetting_t CW_preferredSettings[] =
     { AGC_CFG0, 0x9F },
     { FIFO_CFG, 0x00 },
     { FS_CFG, 0x14 },
-<<<<<<< HEAD
-    { PKT_CFG2, 0x06 },
-    { PKT_CFG1, 0x00 },
-    { PKT_CFG0, 0x40 },
-    { PA_CFG2, 0x64 },	// Vieille valeur = 64, 66
-	// Pour limiter l'emission, 0x64 (d'apres Smart RF Studio)
-    { PA_CFG0, 0x4C },	// Ancienne valeur 4C, 56
-=======
     { PKT_CFG2, 0x06 },	// Vieille valeur = 0x06
     { PKT_CFG1, 0x00 }, // Vieille valeur = 0x00
     { PKT_CFG0, 0x40 }, // Vieille valeur = 0x40
     { PA_CFG2, 0x0C },	// Vieille valeur = 64, 66
 	// Pour limiter l'emission, 0x64 (d'apres Smart RF Studio)
     { PA_CFG0, 0x18 },	// Ancienne valeur 4C, 56
->>>>>>> CommunicationAX25
     { IF_MIX_CFG, 0x00 },
     { FREQOFF_CFG, 0x00 },
     { TOC_CFG, 0x0A },
     { CFM_DATA_CFG, 0x01 },
     { FREQ2, 0x6C }, // Ancien = 6C
     { FREQ1, 0xF1 }, // Ancien = F1
-<<<<<<< HEAD
-    { FREQ0, 0x2F },
-=======
     { FREQ0, 0x2F }, // Ancien = 2F
->>>>>>> CommunicationAX25
     { FS_DIG1, 0x00 },
     { FS_DIG0, 0x5F },
     { FS_CAL1, 0x40 },
