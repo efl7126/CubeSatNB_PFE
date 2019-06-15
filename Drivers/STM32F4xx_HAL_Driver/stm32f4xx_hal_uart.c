@@ -1186,11 +1186,23 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
   */
 __weak void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+  // Cette fonction est appelée par le ISR de l'interruption
+  // déclenchée après qu'un paquet complet est reçu sur UART
+
   /* Prevent unused argument(s) compilation warning */
   UNUSED(huart);
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_UART_TxCpltCallback could be implemented in the user file
    */
+
+  // Copier les données reçues sur UART dans last_ax25_payload.data
+  // last_ax25_payload.data sera ensuite envoyé vers le CC1120
+
+  strncpy(last_ax25_payload.data, comms_data.obc_uart.uart_buf, AX25_PAYLOAD_MAXLEN);
+
+  // Valide le paquet pour l'envoi
+  last_ax25_payload.valide = 1;
+
 }
 
 /**

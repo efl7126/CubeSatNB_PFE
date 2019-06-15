@@ -26,6 +26,8 @@
 // #include "sysview.h"
 // #include "pkt_pool.h"
 #include <string.h>
+#include <pfe_fonctionsUtilisateur.h>
+
 
 #undef __FILE_ID__
 #define __FILE_ID__ 38
@@ -33,6 +35,12 @@
 static comms_wod_t last_wod;
 // static comms_ex_wod_t last_ex_wod;
 extern comms_rf_stat_t comms_stats;
+
+
+// Fait reference a la variable globale externe definie dans main.c
+// Contient la derniere trame AX.25 recue a partir du UART
+
+extern payload_data_t last_ax25_payload;
 
 
 uint8_t
@@ -234,46 +242,35 @@ comms_ex_wod_init()
  * period is bypassed.
  * @return number of bytes sent or negative error code
  */
-int32_t
-comms_wod_tx(uint8_t bypass_check)
+int32_t comms_wod_tx(uint8_t bypass_check)
 {
-  int32_t ret = 0;
+	int32_t ret = 0;
 
-  /* Check if the satellite is during command and control phase */
-//  if(is_cmd_ctrl_enabled() && !bypass_check) {
-//    return 0;
-//  }
+	// Si le payload reçu sur UART n'a pas encore été lu
+	if(last_ax25_payload.valide == 1)
+	{
+		// Creer le paquet a partir du payload
+		comms_wod_t paquetWODEssai = {
+			.len = sizeof(last_ax25_payload.data)/sizeof(last_ax25_payload.data[0]),
+			.tx_cnt = 0,
+			.valid = 1
+		};
 
-  // Pour fins de debogage, un paquet WOD d'essai sera encodé ici
-  uint8_t wodBuf[WOD_SIZE] = "Hello World \r\n";
-  comms_wod_t paquetWODEssai = {
-		  .len = sizeof(wodBuf)/sizeof(wodBuf[0]),
-		  .tx_cnt = 0,
-  	  	  .valid = 1
-  };
-  strncpy(paquetWODEssai.wod, wodBuf, WOD_SIZE);
+		strncpy(paquetWODEssai.wod, last_ax25_payload.data, WOD_SIZE); // Copie des donnees
 
-  last_wod = paquetWODEssai;
+		last_wod = paquetWODEssai;
 
-  /* If the last OBC WOD was valid, send it but for a finite number of times */
-  //if(last_wod.valid && last_wod.tx_cnt < __WOD_VALID_REPEATS) {
-    ret = send_payload(last_wod.wod, last_wod.len, 1, COMMS_DEFAULT_TIMEOUT_MS);
-    if(ret > 0){
-      last_wod.tx_cnt++;
-    }
-  //}
+		// Envoyer le paquet sur la radio
+		ret = send_payload(last_wod.wod, last_wod.len, 1, COMMS_DEFAULT_TIMEOUT_MS);
 
-  // Mis en commentaire pour DEBUG
+		if(ret > 0){
+			last_wod.tx_cnt++;
+		}
 
-//  else{
-//    /*
-//     * Send a WOD with all zeros to the Ground. This will indicate the
-//     * communication problem with the OBC
-//     */
-//    memset(last_wod.wod, 0, WOD_SIZE);
-//    ret = send_payload(last_wod.wod, WOD_SIZE, 1, COMMS_DEFAULT_TIMEOUT_MS);
-//  }
-  return ret;
+		last_ax25_payload.valide = 0; // Le paquet a été envoyé, donc on peut enlever la validation pour éviter qu'il soit renvoyé inutilement
+	}
+
+	return ret;
 }
 
 /**

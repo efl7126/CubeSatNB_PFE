@@ -62,10 +62,10 @@
 #include "cc_tx_init.h"
 /*
 #include "cc_rx_init.h"
-#include "comms.h"
 #include "pkt_pool.h"
 #include "service_utilities.h"
 */
+#include "comms.h"
 #include "comms_manager.h"
 #include "stm32f4xx_hal_iwdg.h"
 
@@ -82,6 +82,7 @@
 #include "stm32f4xx_hal_uart.h"
 #include "upsat.h"
 
+#include "pfe_fonctionsUtilisateur.h"
 
 /* USER CODE END Includes */
 
@@ -91,9 +92,6 @@ UART_HandleTypeDef huart5;
 SPI_HandleTypeDef hspi1;
 DMA_HandleTypeDef hdma_spi1_tx;
 DMA_HandleTypeDef hdma_uart5_tx;
-
-/* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
 
 
 /* USER CODE BEGIN PV */
@@ -110,6 +108,7 @@ volatile uint8_t rx_thr_flag = 0;
 uint8_t uart_temp[512];
 uint8_t debug_temp[256];
 
+extern struct _comms_data comms_data;
 // extern comms_rf_stat_t comms_stats;
 
 
@@ -120,6 +119,8 @@ uint8_t debug_temp[256];
 // Si activerCW = 0, seules les données AX.25 sont envoyées.
 // =================================================================================
 uint8_t activerCW = 1;
+
+payload_data_t last_ax25_payload;
 
 
 /* USER CODE END PV */
@@ -138,6 +139,7 @@ static void MX_UART5_Init(void);
 static void MX_GPIO_Init_suite(GPIO_InitTypeDef *GPIO_InitStruct);
 
 void testCommunicationUART();
+void setupUART();
 
 /* USER CODE END PFP */
 
@@ -153,6 +155,9 @@ void testCommunicationUART();
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
+  // Réception sur UART sans bloquage (le CPU continue de tourner)
+  setupUART();
 
   uint8_t myBuf[100] = "Hello World \r\n"; // Utilisé pour la communication USB
 
@@ -351,6 +356,16 @@ void testCommunicationUART()
 	}
 }
 
+void setupUART()
+{
+
+	// Active la reception sur UART par interruption sans blocage (le CPU continue de tourner)
+	HAL_UART_Receive_IT (&huart5, comms_data.obc_uart.uart_buf, UART_BUF_SIZE);
+
+	// La routine de service d'interruption qui est appelee quand qqchose
+	// est recu sur UART est : HAL_UART_RxCpltCallback
+
+}
 
 
 /**

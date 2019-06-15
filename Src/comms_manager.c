@@ -29,6 +29,7 @@
 #include "utils.h"
 #include "config.h"
 #include "stats.h"
+#include "comms.h"
 /*
 #include "log.h"
 #include "services.h"
@@ -66,7 +67,7 @@ volatile extern uint8_t rx_sync_flag;
 
 extern UART_HandleTypeDef huart5;
 extern IWDG_HandleTypeDef hiwdg;
-extern struct _comms_data comms_data;
+// extern struct _comms_data comms_data;
 comms_rf_stat_t comms_stats;
 
 // Notifies the communication mode over USB

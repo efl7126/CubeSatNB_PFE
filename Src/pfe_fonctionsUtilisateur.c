@@ -14,6 +14,8 @@
 uint8_t* rccGetResetReason(void);
 
 
+
+
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 
