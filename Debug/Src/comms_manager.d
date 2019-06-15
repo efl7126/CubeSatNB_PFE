@@ -36,6 +36,7 @@ Src/comms_manager.o: ../Src/comms_manager.c \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h \
@@ -52,7 +53,6 @@ Src/comms_manager.o: ../Src/comms_manager.c \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/ecss_services/subsystems_ids.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Inc/system.h \
  C:/Users/franc/Documents/_Hiver2019/PFE/Codes/Communications/Projet2_5_CWAjoutDeWOD_CWFonctionnel/ecss_services/services.h \
- C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Inc/usbd_cdc_if.h \
  C:/Users/franc/Documents/_Hiver2019/PFE/Codes/Communications/Projet2_2_CWAjoutDeWOD/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
  C:/Users/franc/Documents/_Hiver2019/PFE/Codes/Communications/Projet2_2_CWAjoutDeWOD/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
@@ -138,6 +138,8 @@ C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/st
 
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 
+C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h:
@@ -169,8 +171,6 @@ C:/Users/franc/Documents/Codes/CubeSatNB_PFE/ecss_services/subsystems_ids.h:
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Inc/system.h:
 
 C:/Users/franc/Documents/_Hiver2019/PFE/Codes/Communications/Projet2_5_CWAjoutDeWOD_CWFonctionnel/ecss_services/services.h:
-
-C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Inc/usbd_cdc_if.h:
 
