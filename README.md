@@ -33,3 +33,9 @@ Voici un petit tutoriel pour commencer avec Git :
   - Choisis la bonne branche
 
 Pour changer de branche, faire git checkout branchName. Les fichiers dans le dossier local vont changer à ceux de la branche.
+
+## Trucs pour utiliser SW4STM32
+
+1. Pour trouver la definition d'une fonction ou d'un type, faire cntrl-left click sur son nom.  
+2. A chaque fois que vous tombez sur une erreur bizarre, toujours faire un Project->Clean avant Project->Build All
+3. En ce qui a trait au code de configuration (p. ex. les interfaces), mieut vaut utiliser STM32CubeMX qui va generer le code automatiquement sans erreur.
