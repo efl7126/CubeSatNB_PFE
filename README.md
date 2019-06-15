@@ -4,6 +4,8 @@ La branche "master" contient un code fonctionnel, mais n'est pas la plus récent
 
 La branche "CommunicationAX25" contient les modifications les plus récentes (en développement).
 
+La branche "codeMorse" implemente seulement la transmission par code morse.
+
 ## Comment télécharger le code?
 
 Ouvrir une console Git Bash et exécuter la commande : git clone https://github.com/efl7126/CubeSatNB_PFE.git
