@@ -26,6 +26,7 @@ Src/system_stm32f4xx.o: ../Src/system_stm32f4xx.c \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
+ C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h \
  C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
@@ -83,6 +84,8 @@ C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/st
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
+
+C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 C:/Users/franc/Documents/Codes/CubeSatNB_PFE/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h:
 
