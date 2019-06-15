@@ -31,4 +31,5 @@ Voici un petit tutoriel pour commencer avec Git :
     - Montre les branches disponibles
 - git checkout origin/CommunicationAX25
   - Choisis la bonne branche
+
 Pour changer de branche, faire git checkout origin/branchName. Les fichiers dans le dossier local vont changer à ceux de la branche.
